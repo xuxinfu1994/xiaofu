@@ -1,6 +1,6 @@
 <template>
   <div >
-    <Header> </Header>
+    <HomeHeader> </HomeHeader>
     <header-swiper> </header-swiper>
     <HeaderIcons></HeaderIcons>
     <Recommend></Recommend>
@@ -9,22 +9,38 @@
 </template>
 
 <script>
-import Header from './components/Header'
+import Vue from 'vue'
+import HomeHeader from './components/Header'
 import HeaderSwiper from './components/Swiper'
 import HeaderIcons from './components/Icons'
 import Recommend from './components/Recommend'
 import Weekend from './components/Weekend'
+import axios from 'axios'
+
+Object.defineProperty(Vue.prototype, '$axios', {value: axios})
 
 export default {
-  name: 'Home',
-  components:{
-    Header,
+    name: 'Home',
+    components:{
+    HomeHeader,
     HeaderSwiper,
     HeaderIcons,
     Recommend,
     Weekend
+  },
+  methods : {
+    getHomeInfo (){
+       this.$axios.get('api/index')
+       this.$axios.get('api/detail')
+    },
+    getHomeInfoSucc (res){
+        // console.log(res);
+    }
+  },
+  mounted () {
+    this.getHomeInfo()
   }
-}
+ }
 </script>
 
 <style>
